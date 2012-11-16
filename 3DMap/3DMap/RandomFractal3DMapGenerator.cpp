@@ -78,7 +78,7 @@ C3DMap* CRandomFractal3DMapGenerator::generateMap(GLint squareGridSize, GLfloat 
 		}
 	}
 
-	return new C3DMap(squareGridSize, squareGridSize, mMaxHeight, mTempMap);
+	return new C3DMap(squareGridSize, squareGridSize, mTempMap);
 }
 
 GLfloat CRandomFractal3DMapGenerator::getRandomHeight()

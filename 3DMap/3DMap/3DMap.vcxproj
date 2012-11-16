@@ -39,8 +39,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\dev\Projekte\Common;D:\dev\Projekte\Common\Math;D:\dev\Projekte\Common\Loader;D:\dev\Projekte\Common\Events;D:\dev\Projekte\Common\Application;$(IncludePath)</IncludePath>
-    <SourcePath>D:\dev\Projekte\Common\Math;D:\dev\Projekte\Common\Loader;D:\dev\Projekte\Common\Events;D:\dev\Projekte\Common\Application;D:\dev\Projekte\Common;$(SourcePath)</SourcePath>
+    <IncludePath>D:\dev\Projekte\zlib;D:\dev\Projekte\Common;D:\dev\Projekte\Common\Math;D:\dev\Projekte\Common\Loader;D:\dev\Projekte\Common\Events;D:\dev\Projekte\Common\Application;$(IncludePath)</IncludePath>
+    <SourcePath>D:\dev\Projekte\zlib;D:\dev\Projekte\Common\Math;D:\dev\Projekte\Common\Loader;D:\dev\Projekte\Common\Events;D:\dev\Projekte\Common\Application;D:\dev\Projekte\Common;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -88,7 +88,21 @@
   <ItemGroup>
     <ClInclude Include="..\..\Common\Application\3DApplication.h" />
     <ClInclude Include="..\..\Common\Math\vector3f.h" />
+    <ClInclude Include="..\..\zlib\crc32.h" />
+    <ClInclude Include="..\..\zlib\deflate.h" />
+    <ClInclude Include="..\..\zlib\gzguts.h" />
+    <ClInclude Include="..\..\zlib\inffast.h" />
+    <ClInclude Include="..\..\zlib\inffixed.h" />
+    <ClInclude Include="..\..\zlib\inflate.h" />
+    <ClInclude Include="..\..\zlib\inftrees.h" />
+    <ClInclude Include="..\..\zlib\trees.h" />
+    <ClInclude Include="..\..\zlib\zconf.h" />
+    <ClInclude Include="..\..\zlib\zlib.h" />
+    <ClInclude Include="..\..\zlib\zutil.h" />
     <ClInclude Include="3DMap.h" />
+    <ClInclude Include="3DMapFormat.h" />
+    <ClInclude Include="3DMapLoader.h" />
+    <ClInclude Include="3DMapSaver.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="MapApplication.h" />
     <ClInclude Include="RandomFractal3DMapGenerator.h" />
@@ -99,7 +113,24 @@
   <ItemGroup>
     <ClCompile Include="..\..\Common\Application\3DApplication.cpp" />
     <ClCompile Include="..\..\Common\Math\vector3f.cpp" />
+    <ClCompile Include="..\..\zlib\adler32.c" />
+    <ClCompile Include="..\..\zlib\compress.c" />
+    <ClCompile Include="..\..\zlib\crc32.c" />
+    <ClCompile Include="..\..\zlib\deflate.c" />
+    <ClCompile Include="..\..\zlib\gzclose.c" />
+    <ClCompile Include="..\..\zlib\gzlib.c" />
+    <ClCompile Include="..\..\zlib\gzread.c" />
+    <ClCompile Include="..\..\zlib\gzwrite.c" />
+    <ClCompile Include="..\..\zlib\infback.c" />
+    <ClCompile Include="..\..\zlib\inffast.c" />
+    <ClCompile Include="..\..\zlib\inflate.c" />
+    <ClCompile Include="..\..\zlib\inftrees.c" />
+    <ClCompile Include="..\..\zlib\trees.c" />
+    <ClCompile Include="..\..\zlib\uncompr.c" />
+    <ClCompile Include="..\..\zlib\zutil.c" />
     <ClCompile Include="3DMap.cpp" />
+    <ClCompile Include="3DMapLoader.cpp" />
+    <ClCompile Include="3DMapSaver.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapApplication.cpp" />
     <ClCompile Include="RandomFractal3DMapGenerator.cpp" />
