@@ -1,5 +1,8 @@
 #include "MapApplication.h"
 
+#include "3DMapSaver.h"
+#include "3DMapLoader.h"
+
 CMapApplication::CMapApplication(HDC &hDC, HWND &hWnd)
 :C3DApplication(hDC, hWnd)
 {
@@ -125,10 +128,42 @@ GLvoid CMapApplication::updateScene()
 
 		delete mMap;
 		CRandomFractal3DMapGenerator gen;
-		mMap = gen.generateMap(256, 16, 16, MAP_HEIGHT);
+		mMap = gen.generateMap(MAP_SIZE, 16, 16, MAP_HEIGHT);
 	}
 
-	if (g_Keystate['R'] == FALSE)
+	if ((g_Keystate['K'] == TRUE) && (mRefresh == false))
+	{
+		mRefresh = true;
+
+		Sleep(1000);
+
+		C3DMapSaver saver;
+		if (saver.saveMap(mMap, "test.mff") == FALSE)
+		{
+			OutputDebugString("Fehler beim Speichern");
+		}
+	}
+
+	if ((g_Keystate['L'] == TRUE) && (mRefresh == false))
+	{
+		mRefresh = true;
+
+		Sleep(1000);
+
+		C3DMapLoader loader;
+		C3DMap* newMap = NULL;
+		if (loader.loadMap("test.mff", newMap) == TRUE)
+		{
+			delete mMap;
+			mMap = newMap;
+		}
+		else
+		{
+			OutputDebugString("Fehler beim Laden");
+		}
+	}
+
+	if ((g_Keystate['R'] == FALSE) || (g_Keystate['K'] == FALSE) || (g_Keystate['L'] == FALSE))
 	{
 		mRefresh = false;
 	}
@@ -138,8 +173,13 @@ GLvoid CMapApplication::initScene()
 {
 	CRandomFractal3DMapGenerator generator;
 
-	mMap = generator.generateMap(256, 16, 16, MAP_HEIGHT);
+	mMap = generator.generateMap(MAP_SIZE, 16, 16, MAP_HEIGHT);
 	
+	C3DMapSaver saver;
+	C3DMapLoader loader;
+	//saver.saveMap(mMap, "test.mff");
+	//loader.loadMap("test.mff", mMap);
+
 
 	//C3DMap map(4, 4, 8, 8);
 }

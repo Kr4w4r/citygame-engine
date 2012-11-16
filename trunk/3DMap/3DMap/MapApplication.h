@@ -9,6 +9,8 @@ const GLfloat ZOOM_SPEED = 5.0f;
 
 const GLfloat MAP_HEIGHT = 3.0f;
 
+const GLuint MAP_SIZE = 512;
+
 class CMapApplication : public C3DApplication
 {
 public:

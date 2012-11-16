@@ -17,10 +17,15 @@ class C3DMap
 public:
 	C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat maxHeight);
 	C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat width, GLfloat height, GLfloat maxHeight);
-	C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat maxHeight, MAP_DATA& mapData);
+	C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, MAP_DATA mapData);
 	~C3DMap();
 
 	void render();
+
+	GLuint getWidth();
+	GLuint getHeight();
+
+	MAP_CORNER* getMapCorner(GLuint x, GLuint y);
 
 private:
 	void generateFlatMap(GLuint gridWidth, GLuint gridHeight, GLfloat width, GLfloat height);

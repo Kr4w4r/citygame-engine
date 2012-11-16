@@ -18,13 +18,13 @@ C3DMap::C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat wid
 	generateFlatMap(mWidth, mHeight, width, height);
 }
 
-C3DMap::C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat maxHeight, MAP_DATA& mapData)
+C3DMap::C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, MAP_DATA mapData)
 {
 	mWidth = horizontalCellCount;
 	mHeight = verticalCellCount;
-	mMaxHeight = maxHeight;
-
 	mMapData = mapData;
+
+	//mMaxHeight = maxHeight;
 }
 
 C3DMap::~C3DMap()
@@ -132,4 +132,23 @@ CVector3f C3DMap::getColor(GLfloat height)
 	color.z = colorCode;
 	
 	return color;
+}
+
+MAP_CORNER* C3DMap::getMapCorner(GLuint x, GLuint y)
+{
+	if ((x >= 0) && (x <= mWidth) && (y >= 0) && (y <= mHeight))
+	{
+		return mMapData[x][y];
+	}
+	return NULL;
+}
+
+GLuint C3DMap::getWidth()
+{
+	return mWidth;
+}
+
+GLuint C3DMap::getHeight()
+{
+	return mHeight;
 }
