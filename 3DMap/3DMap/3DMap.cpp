@@ -23,8 +23,19 @@ C3DMap::C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, MAP_DATA ma
 	mWidth = horizontalCellCount;
 	mHeight = verticalCellCount;
 	mMapData = mapData;
+	mMaxHeight = 0;
 
-	//mMaxHeight = maxHeight;
+	for (int x = 0; x < horizontalCellCount; x++)
+	{
+		for (int y = 0; y < verticalCellCount; y++)
+		{
+			if (mMapData[x][y]->z > mMaxHeight)
+			{
+				mMaxHeight = mMapData[x][y]->z;
+			}
+		}
+	}
+
 }
 
 C3DMap::~C3DMap()
@@ -118,6 +129,7 @@ CVector3f C3DMap::getColor(GLfloat height)
 		color.z = -1 * height / mMaxHeight;
 	}
 	*/
+
 	GLfloat colorCode = (height / mMaxHeight +1) ;
 	colorCode /= 2;
 

@@ -2,7 +2,7 @@
 #define _3D_MAP_LOADER
 
 #include "3DMapFormat.h"
-#include "zLib.h"
+#include "zlib.h"
 
 class C3DMapLoader
 {
