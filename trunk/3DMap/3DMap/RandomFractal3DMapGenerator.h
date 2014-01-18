@@ -20,6 +20,11 @@ protected:
 
 	GLfloat getDiamondAverageHeight(GLint xCenter, GLint yCenter, GLint diamondSize);
 
+	void flattenMap();
+	void flattenSquare(int squareSize);
+	GLfloat getAverageValueInRange(int steps);
+	
+
 	MAP_DATA mTempMap;
 	GLint mTotalGridSize;
 

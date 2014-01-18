@@ -11,6 +11,8 @@
 
 #include "MapApplication.h"
 
+#include "EventManager.h"
+#include "KeyboardEvent.h"
 
 #define MAX_LOADSTRING 100
 
@@ -203,6 +205,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_KEYDOWN:
 		{
+			CEventManager::getInstance()->queueEvent(new CKeyboardEvent(wParam, TRUE));
 			//CEventManager::getInstance()->queueEvent(new 
 			g_Keystate[wParam] = TRUE;
 
@@ -212,6 +215,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		case WM_KEYUP:
 		{
+			CEventManager::getInstance()->queueEvent(new CKeyboardEvent(wParam, FALSE));
 			g_Keystate[wParam] = FALSE;
 			//shared_ptr<CKeyboardEvent> keyboardEvent(new CKeyboardEvent(wParam, false));
 			//g_EventManager.VQueueEvent(keyboardEvent);

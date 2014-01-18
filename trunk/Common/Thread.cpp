@@ -8,7 +8,7 @@ DWORD WINAPI threadCaller(__in  LPVOID lpParameter)
 	return thread->threadFunction();
 }
 
-CThread::CThread(CHAR* threadName, SIZE_T stacksize, BOOLEAN bStartSuspended)
+CThread::CThread(const CHAR* threadName, SIZE_T stacksize, BOOLEAN bStartSuspended)
 {
 	mbDeleteThread = FALSE;
 	mbStopped = bStartSuspended;
@@ -17,7 +17,7 @@ CThread::CThread(CHAR* threadName, SIZE_T stacksize, BOOLEAN bStartSuspended)
 	DWORD createFlags = 0;
 	if (bStartSuspended == TRUE)
 	{
-		createFlags &= CREATE_SUSPENDED;
+		createFlags |= CREATE_SUSPENDED;
 	}
 	
 	mThreadHandle = CreateThread(NULL, stacksize, &threadCaller, this, createFlags, &mThreadId);
@@ -25,7 +25,7 @@ CThread::CThread(CHAR* threadName, SIZE_T stacksize, BOOLEAN bStartSuspended)
 	if (mThreadHandle == INVALID_HANDLE_VALUE)
 	{
 		char out[100];
-		sprintf(out, "Creating Thread: %s %u failed.\n", threadName, mThreadId);
+		sprintf_s(out, 100, "Creating Thread: %s %u failed.\n", threadName, mThreadId);
 		OutputDebugString(out);
 	}
 }
@@ -63,7 +63,7 @@ DWORD CThread::threadFunction()
 		while (mbStopThread == FALSE)
 		{
 			mbStopped = FALSE;
-			threadMethode();
+			threadMethod();
 		}
 		// der Thread ist jetzt gestoppt
 		mbStopped = TRUE;

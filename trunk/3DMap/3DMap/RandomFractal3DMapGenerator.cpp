@@ -189,3 +189,18 @@ GLfloat CRandomFractal3DMapGenerator::getDiamondAverageHeight(GLint xCenter, GLi
 
 	return averageHeight / numCorners;
 }
+
+void CRandomFractal3DMapGenerator::flattenMap()
+{
+	flattenSquare(mTotalGridSize);
+}
+
+void CRandomFractal3DMapGenerator::flattenSquare(GLint squareSize)
+{
+
+}
+
+GLfloat CRandomFractal3DMapGenerator::getAverageValueInRange(int range)
+{
+	return 0;
+}

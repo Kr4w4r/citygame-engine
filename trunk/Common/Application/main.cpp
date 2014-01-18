@@ -1,12 +1,13 @@
 #include <windows.h>
 
-#include "TestApp.h"
+// TODO Add specific application header here
+//#include "AppName.h"
 //#include "EventManager.h"
 //#include "KeyboardEvent.h"
 
-#include "boost/config.hpp"
+/*#include "boost/config.hpp"
 #include "boost/shared_ptr.hpp"
-using boost::shared_ptr;
+using boost::shared_ptr;*/
 
 HDC		hDC = NULL;
 HGLRC	hRC = NULL;
@@ -21,7 +22,8 @@ BOOLEAN g_Keystate[256];
 INT g_MouseX;
 INT g_MouseY;
 
-CTestApp g_application(hDC, hWnd);
+// TODO Create specific application instance here.
+//CAppName g_application(hDC, hWnd);
 
 CHAR gExeFilePath[MAX_PATH];
 

@@ -3,13 +3,14 @@
 
 #include "3DApplication.h"
 #include "RandomFractal3DMapGenerator.h"
+#include "IOHandlerThread.h"
 
 const GLfloat ROT_SPEED = 20.0f;
 const GLfloat ZOOM_SPEED = 5.0f;
 
 const GLfloat MAP_HEIGHT = 3.0f;
 
-const GLuint MAP_SIZE = 256;
+const GLuint MAP_SIZE = 128;
 
 class CMapApplication : public C3DApplication
 {
@@ -28,6 +29,8 @@ protected:
 	virtual GLvoid drawScene();
 	virtual GLvoid updateScene();
 	virtual GLvoid initScene();
+
+	CIOHandlerThread mIOHandlerThread;
 };
 
 #endif

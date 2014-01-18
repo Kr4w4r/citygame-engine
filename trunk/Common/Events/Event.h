@@ -10,10 +10,8 @@ public:
 	virtual ~CEvent();
 
 	virtual ULONG getTimestamp();
-	virtual EVENT_TYPE getType();
 
 protected:
-	EVENT_TYPE mEventType;
 	ULONG mTimestamp;
 };
 

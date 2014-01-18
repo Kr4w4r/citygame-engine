@@ -1,5 +1,8 @@
 #include "EventManager.h"
 
+#include <string>
+using std::string;
+
 /**************************************************************************
 	Static Methoden
 **************************************************************************/
@@ -13,30 +16,44 @@ IEventManager* CEventManager::getInstance()
 	normale Methoden
 **************************************************************************/
 CEventManager::CEventManager()
-:mRegisteredEvents()
+:CThread(EVENT_MANAGER_THREAD_NAME, 0, TRUE)
+,mRegisteredEvents()
 ,mEventListenerMap()
+,mWriteQueueCS("writeQueueCS")
+,mListenerCS("ListenerCS")
 {
+	OutputDebugString("constructed");
 	mpReadQueue = &mEventQueue[0];
 	mpWriteQueue = &mEventQueue[1];
+
+	trigger();
 }
 
 CEventManager::~CEventManager()
 {
 	// alles Aufräumen
-
+	prepareDelete();
+	while (isReadyForDelete() == false)
+	{}
 }
 
-void CEventManager::addEventListener(IEventListener* pEventListener, EVENT_TYPE triggerType)
+void CEventManager::threadMethod()
 {
+	tick(INFINITE);
+}
+
+void CEventManager::addEventListener(IEventListener* pEventListener, CEventType triggerType)
+{
+	CCriticalBlock cs(&mListenerCS);
+
 	// zuerst den EventType in das Set der verarbeiteten Events aufnehmen
 	mRegisteredEvents.insert(triggerType);
 	
 	// Liste der Eventlistener für diesen Eventtypen holen
-	EventListenerMap::iterator mapIt = mEventListenerMap.find(triggerType);
-	
+	EventListenerMapIter mapIt = mEventListenerMap.find(triggerType);
 	if (mapIt == mEventListenerMap.end())
 	{
-		mEventListenerMap.insert(pair<EVENT_TYPE, EventListenerList>(triggerType, EventListenerList()));
+		mEventListenerMap.insert(pair<CEventType, EventListenerList>(triggerType, EventListenerList()));
 
 		mapIt = mEventListenerMap.find(triggerType);
 	}
@@ -44,26 +61,30 @@ void CEventManager::addEventListener(IEventListener* pEventListener, EVENT_TYPE 
 	EventListenerList& eventListenerList = (EventListenerList&)(*mapIt).second;
 
 	// verhindern das wir einen Listener 2mal einfügen
-	for (EventListenerList::iterator iter = eventListenerList.begin(); 
+	for (EventListenerListIter iter = eventListenerList.begin(); 
 		iter != eventListenerList.end(); iter++)
 	{
 		if ((*iter) == pEventListener)
+		{
+			mListenerCS.leave();
 			return ;
+		}
 	}
 	// ok ist noch nicht vorhanden, also rein damit
 	eventListenerList.push_back(pEventListener);
 }
 
-void CEventManager::deleteEventListener(IEventListener* pEventListener, EVENT_TYPE triggerType)
+void CEventManager::deleteEventListener(IEventListener* pEventListener, CEventType triggerType)
 {
+	CCriticalBlock cs(&mListenerCS);
+
 	// wir löschen den Eventlister für ein bestimmtes Event
-	EventListenerMap::iterator mapIter = mEventListenerMap.find(triggerType);
-	
+	EventListenerMapIter mapIter = mEventListenerMap.find(triggerType);
 	if (mapIter != mEventListenerMap.end())
 	{
 		EventListenerList& eventListenerList = (EventListenerList&)(*mapIter).second;
 		
-		for (EventListenerList::iterator iter = eventListenerList.begin(); 
+		for (EventListenerListIter iter = eventListenerList.begin(); 
 			iter != eventListenerList.end(); iter++)
 		{
 			if ((*iter) == pEventListener)
@@ -77,13 +98,15 @@ void CEventManager::deleteEventListener(IEventListener* pEventListener, EVENT_TY
 
 void CEventManager::deleteEventListener(IEventListener* pEventListener)
 {
+	CCriticalBlock cs(&mListenerCS);
+
 	// wir löschen den Eventlister komplett aus allen Listen
-	for (EventListenerMap::iterator mapIter = mEventListenerMap.begin(); 
+	for (EventListenerMapIter mapIter = mEventListenerMap.begin(); 
 		mapIter != mEventListenerMap.end(); mapIter++)
 	{
 		EventListenerList& eventListenerList = (EventListenerList&)(*mapIter).second;
 		
-		for (EventListenerList::iterator iter = eventListenerList.begin(); 
+		for (EventListenerListIter iter = eventListenerList.begin(); 
 			iter != eventListenerList.end(); iter++)
 		{
 			if ((*iter) == pEventListener)
@@ -104,16 +127,19 @@ void CEventManager::deleteEventListener(IEventListener* pEventListener)
 **************************************************************************/
 BOOLEAN CEventManager::triggerEvent(IEvent* pTriggerEvent)
 {
-	// wir löschen den Eventlister für ein bestimmtes Event
-	EventListenerMap::iterator mapIter = mEventListenerMap.find(pTriggerEvent->getType());
-	
+	BOOLEAN bRet = FALSE;
+
+	CCriticalBlock cs(&mListenerCS);
+
+	// wir suchen den Eventlister für ein bestimmtes Event
+	EventListenerMapIter mapIter = mEventListenerMap.find(pTriggerEvent->getType());
 	if (mapIter != mEventListenerMap.end())
 	{
 		EventListenerList& eventListenerList = (EventListenerList&)(*mapIter).second;
 		
 		// Jedem Eventlistener das Event übergeben, es sei denn der Listener 
 		// sagt, dass die Verteilung gestoppt werden soll
-		for (EventListenerList::iterator iter = eventListenerList.begin(); 
+		for (EventListenerListIter iter = eventListenerList.begin(); 
 			iter != eventListenerList.end(); iter++)
 		{
 			if ((*iter)->handleEvent(pTriggerEvent) == TRUE)
@@ -123,7 +149,7 @@ BOOLEAN CEventManager::triggerEvent(IEvent* pTriggerEvent)
 		}
 	}
 
-	// alles ohne Probleme verlaufen
+	// alles ohne Probleme verlaufen und das Event wurde nicht Konsumiert
 	return FALSE;
 }
 
@@ -138,16 +164,22 @@ BOOLEAN CEventManager::triggerEvent(IEvent* pTriggerEvent)
 BOOLEAN CEventManager::queueEvent(IEvent* pEvent)
 {
 	// können wir das Event überhaupt verarbeiten?
-	EventSet::iterator setIter = mRegisteredEvents.find(pEvent->getType());
+	EventSetIter setIter = mRegisteredEvents.find(pEvent->getType());
 	if (setIter == mRegisteredEvents.end())
 	{
+		string output = "CEventManager::queueEvent => No listener registered that would handle the '" + pEvent->getType().getName() + "'-Event.\n";
+		OutputDebugString(output.c_str());
+
 		// das Event wird von keinem Listener angenommen
 		return FALSE;
 	}
 
-	// Event einfügen
-	mpWriteQueue->push_back(pEvent);
-
+	mWriteQueueCS.enter();
+	{
+		// Event einfügen
+		mpWriteQueue->push_back(pEvent);
+	}
+	mWriteQueueCS.leave();
 	return TRUE;
 }
 
@@ -155,22 +187,24 @@ BOOLEAN CEventManager::queueEvent(IEvent* pEvent)
 @brief		Entfernt das erste Event von dem angegebenen Typen aus der EventQueue
 			oder alle wenn abortAll = TRUE
 
-@param[in] EVENT_TYPE eventType		Typ des Events welches entfernt werden soll
+@param[in] CEventType eventType		Typ des Events welches entfernt werden soll
 @param[in] BOOLEAN abortAll			gibt an ob nur das erste oder alle Events 
 									des Typen aus der Queue entfernt werden soll
 
 @return		-c TRUE		Event(s) erfolgreich gelöscht
 			-c FALSE	Fehler beim löschen (keins mehr vorhanden?)
 **************************************************************************/
-BOOLEAN CEventManager::abortEvent(EVENT_TYPE eventType, BOOLEAN bAbortAll)
+BOOLEAN CEventManager::abortEvent(CEventType eventType, BOOLEAN bAbortAll)
 {
+	CCriticalBlock cs(&mWriteQueueCS);
+
 	BOOLEAN bEventAborted = FALSE;
 
-	for (EventQueue::iterator iter = mpWriteQueue->begin(); iter != mpWriteQueue->end(); iter++)
+	for (EventQueueIter iter= mpWriteQueue->begin(); iter != mpWriteQueue->end(); iter++)
 	{
 		if ((*iter)->getType() == eventType)
 		{
-			EventQueue::iterator eraseIter = iter;
+			EventQueueIter eraseIter = iter;
 
 			iter--;
 			mpWriteQueue->erase(eraseIter);
@@ -203,12 +237,20 @@ BOOLEAN CEventManager::tick(ULONG timeLimit)
 	// braucht bis wir die Grenze erreichen, brauchen wir hier keine spezialbehandlung
 	ULONG maxTime = GetTickCount() + timeLimit;
 
-	// EventQueue tauschen
-	EventQueue* tempQueue = mpReadQueue;
-	mpReadQueue = mpWriteQueue;
-	mpWriteQueue = tempQueue;
-	// und die Queue für neue Events frei machen
-	mpWriteQueue->clear();
+	mWriteQueueCS.enter();
+	{
+		// EventQueue tauschen
+		EventQueue* tempQueue = mpReadQueue;
+		mpReadQueue = mpWriteQueue;
+		mpWriteQueue = tempQueue;
+
+		if (mpWriteQueue->size() > 0)
+		{
+			// und die Queue für neue Events frei machen
+			mpWriteQueue->clear();
+		}
+	}
+	mWriteQueueCS.leave();
 
 	BOOLEAN bTimeoutOver = FALSE;
 	// Alle Events durchgehen
@@ -217,13 +259,15 @@ BOOLEAN CEventManager::tick(ULONG timeLimit)
 		IEvent* pEvent = mpReadQueue->front();
 		mpReadQueue->pop_front();
 
+		mListenerCS.enter();
+
 		// Zu dem Event alle zugehörigen Listener suchen
-		EventListenerMap::iterator mapIter = mEventListenerMap.find(pEvent->getType());
+		EventListenerMapIter mapIter = mEventListenerMap.find(pEvent->getType());
 		if (mapIter != mEventListenerMap.end())
 		{
-			EventListenerList& eventListenerList = (EventListenerList&)(*mapIter);
+			EventListenerList& eventListenerList = (EventListenerList&)(*mapIter).second;
 			// und zum Schluss noch das Event von allen Listener verarbeiten lassen
-			for (EventListenerList::iterator listenerIter = eventListenerList.begin(); 
+			for (EventListenerListIter listenerIter = eventListenerList.begin(); 
 				listenerIter != eventListenerList.end(); listenerIter++)
 			{
 				// wenn die Verarbeitung des Events abgebrochen werden soll, hören 
@@ -232,6 +276,9 @@ BOOLEAN CEventManager::tick(ULONG timeLimit)
 					break;
 			}
 		}
+
+		mListenerCS.leave();
+
 		// natürlich müssen wir noch prüfen ob wir noch im Zeitlimit liegen
 		// dann brechen wir die Verarbeitung ab
 		if (GetTickCount() >= maxTime)
@@ -246,10 +293,14 @@ BOOLEAN CEventManager::tick(ULONG timeLimit)
 	{
 		bQueueEmpty = FALSE;
 
-		// dazu das Ende der ReadQueue an den Anfang der WriteQueue verschieben
-		IEvent* pEvent = mpReadQueue->back();
-		mpReadQueue->pop_back();
-		mpWriteQueue->push_front(pEvent);
+		mWriteQueueCS.enter();
+		{
+			// dazu das Ende der ReadQueue an den Anfang der WriteQueue verschieben
+			IEvent* pEvent = mpReadQueue->back();
+			mpReadQueue->pop_back();
+			mpWriteQueue->push_front(pEvent);
+		}
+		mWriteQueueCS.leave();
 	}
 
 	return bQueueEmpty;
@@ -259,12 +310,12 @@ BOOLEAN CEventManager::tick(ULONG timeLimit)
 @brief		Prüft ob der Angegebene EventType von irgendeinem Listener 
 			überhaupt empfangen und damit auch verarbeitet wird
 
-@param[in] EVENT_TYPE eventType		EventType der geprüft werden soll
+@param[in] CEventType eventType		EventType der geprüft werden soll
 
 @return		-c TRUE		Event wird verarbeitet
 			-c FALSE	Event kann nicht verbeitet werden
 **************************************************************************/
-BOOLEAN CEventManager::validateType(EVENT_TYPE eventType)
+BOOLEAN CEventManager::validateType(CEventType eventType)
 {
 	return TRUE;
 }
