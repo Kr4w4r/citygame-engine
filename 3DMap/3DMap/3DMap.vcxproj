@@ -20,7 +20,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -41,7 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\..\Common\zlib;$(SolutionDir)\..\Common;$(SolutionDir)\..\Common\Math;$(SolutionDir)\..\Common\Loader;$(SolutionDir)\..\Common\Events;$(SolutionDir)\..\Common\Application;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\..\Common\IO;$(SolutionDir)\..\Common\zlib;$(SolutionDir)\..\Common;$(SolutionDir)\..\Common\Math;$(SolutionDir)\..\Common\Loader;$(SolutionDir)\..\Common\Events;$(SolutionDir)\..\Common\Application;$(IncludePath)</IncludePath>
     <SourcePath>$(SolutionDir)\..\Common\zlib;$(SolutionDir)\..\Common\Math;$(SolutionDir)\..\Common\Loader;$(SolutionDir)\..\Common\Events;$(SolutionDir)\..\Common\Application;$(SolutionDir)\..\Common;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -89,13 +89,26 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Common\Application\3DApplication.h" />
+    <ClInclude Include="..\..\Common\Application\TickEvent.h" />
+    <ClInclude Include="..\..\Common\CriticalSection.h" />
+    <ClInclude Include="..\..\Common\Events\Event.h" />
+    <ClInclude Include="..\..\Common\Events\EventListener.h" />
+    <ClInclude Include="..\..\Common\Events\EventManager.h" />
+    <ClInclude Include="..\..\Common\Events\IEvent.h" />
+    <ClInclude Include="..\..\Common\Events\IEventListener.h" />
+    <ClInclude Include="..\..\Common\Events\IEventManager.h" />
+    <ClInclude Include="..\..\Common\IO\IOHandlerThread.h" />
+    <ClInclude Include="..\..\Common\IO\KeyboardEvent.h" />
+    <ClInclude Include="..\..\Common\IO\KeyboardBindings.h" />
     <ClInclude Include="..\..\Common\Math\vector3f.h" />
+    <ClInclude Include="..\..\Common\Thread.h" />
     <ClInclude Include="3DMap.h" />
     <ClInclude Include="3DMapFormat.h" />
     <ClInclude Include="3DMapLoader.h" />
     <ClInclude Include="3DMapSaver.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="MapApplication.h" />
+    <ClInclude Include="MapApplicationKeyBindings.h" />
     <ClInclude Include="RandomFractal3DMapGenerator.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -103,12 +116,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Common\Application\3DApplication.cpp" />
+    <ClCompile Include="..\..\Common\Application\TickEvent.cpp" />
+    <ClCompile Include="..\..\Common\Events\Event.cpp" />
+    <ClCompile Include="..\..\Common\Events\EventListener.cpp" />
+    <ClCompile Include="..\..\Common\Events\EventManager.cpp" />
+    <ClCompile Include="..\..\Common\IO\IOHandlerThread.cpp" />
+    <ClCompile Include="..\..\Common\IO\KeyboardEvent.cpp" />
+    <ClCompile Include="..\..\Common\IO\KeyboardBindings.cpp" />
     <ClCompile Include="..\..\Common\Math\vector3f.cpp" />
+    <ClCompile Include="..\..\Common\Thread.cpp" />
     <ClCompile Include="3DMap.cpp" />
     <ClCompile Include="3DMapLoader.cpp" />
     <ClCompile Include="3DMapSaver.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapApplication.cpp" />
+    <ClCompile Include="MapApplicationKeyBindings.cpp" />
     <ClCompile Include="RandomFractal3DMapGenerator.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

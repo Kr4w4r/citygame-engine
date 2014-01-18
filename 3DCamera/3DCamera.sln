@@ -3,7 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3DCamera", "3DCamera\3DCamera.vcxproj", "{E47F49F8-DCEC-4191-9BD6-5560A5BA403A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "..\Tests\Tests.vcxproj", "{4BC1E219-CCCE-49D2-853F-74E50A6DBD23}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7AE9BCBB-34D2-4063-8426-20BD17B5FC03}"
+	ProjectSection(SolutionItems) = preProject
+		3DCamera.vsmdi = 3DCamera.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = 3DCamera.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
@@ -13,6 +25,10 @@ Global
 		{E47F49F8-DCEC-4191-9BD6-5560A5BA403A}.Debug|Win32.Build.0 = Debug|Win32
 		{E47F49F8-DCEC-4191-9BD6-5560A5BA403A}.Release|Win32.ActiveCfg = Release|Win32
 		{E47F49F8-DCEC-4191-9BD6-5560A5BA403A}.Release|Win32.Build.0 = Release|Win32
+		{4BC1E219-CCCE-49D2-853F-74E50A6DBD23}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4BC1E219-CCCE-49D2-853F-74E50A6DBD23}.Debug|Win32.Build.0 = Debug|Win32
+		{4BC1E219-CCCE-49D2-853F-74E50A6DBD23}.Release|Win32.ActiveCfg = Release|Win32
+		{4BC1E219-CCCE-49D2-853F-74E50A6DBD23}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

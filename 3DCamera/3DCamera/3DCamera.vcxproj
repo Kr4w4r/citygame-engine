@@ -79,17 +79,33 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Common\Application\3DApplication.cpp" />
+    <ClCompile Include="..\..\Common\Application\TickEvent.cpp" />
+    <ClCompile Include="..\..\Common\Events\Event.cpp" />
+    <ClCompile Include="..\..\Common\Events\EventListener.cpp" />
+    <ClCompile Include="..\..\Common\Events\EventManager.cpp" />
+    <ClCompile Include="..\..\Common\Math\Matrix.cpp" />
     <ClCompile Include="..\..\Common\Math\vector2f.cpp" />
     <ClCompile Include="..\..\Common\Math\vector3f.cpp" />
+    <ClCompile Include="..\..\Common\Thread.cpp" />
     <ClCompile Include="3DCamera.cpp" />
     <ClCompile Include="3DCameraApplication.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Common\Application\3DApplication.h" />
+    <ClInclude Include="..\..\Common\Application\TickEvent.h" />
+    <ClInclude Include="..\..\Common\CriticalSection.h" />
+    <ClInclude Include="..\..\Common\Events\Event.h" />
+    <ClInclude Include="..\..\Common\Events\EventListener.h" />
+    <ClInclude Include="..\..\Common\Events\EventManager.h" />
+    <ClInclude Include="..\..\Common\Events\IEvent.h" />
+    <ClInclude Include="..\..\Common\Events\IEventListener.h" />
+    <ClInclude Include="..\..\Common\Events\IEventManager.h" />
     <ClInclude Include="..\..\Common\Math\mathMacros.h" />
+    <ClInclude Include="..\..\Common\Math\Matrix.h" />
     <ClInclude Include="..\..\Common\Math\vector2f.h" />
     <ClInclude Include="..\..\Common\Math\vector3f.h" />
+    <ClInclude Include="..\..\Common\Thread.h" />
     <ClInclude Include="3DCamera.h" />
     <ClInclude Include="3DCameraApplication.h" />
   </ItemGroup>

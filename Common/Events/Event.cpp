@@ -1,17 +1,12 @@
 #include "Event.h"
 
-CEvent::CEvent(ULONG timestamp)
+CEvent::CEvent(ULONG timestamp) : IEvent()
 {
 	mTimestamp = timestamp;
 }
 
 CEvent::~CEvent()
 {
-}
-
-EVENT_TYPE CEvent::getType()
-{
-	return mEventType;
 }
 
 ULONG CEvent::getTimestamp()

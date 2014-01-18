@@ -7,8 +7,8 @@ class IEventManager
 {
 public:
 	// Methoden für Eventlistener
-	virtual void addEventListener(IEventListener* pEventListener, EVENT_TYPE triggerType) = 0;
-	virtual void deleteEventListener(IEventListener* pEventListener, EVENT_TYPE triggerType) = 0;
+	virtual void addEventListener(IEventListener* pEventListener, CEventType triggerType) = 0;
+	virtual void deleteEventListener(IEventListener* pEventListener, CEventType triggerType) = 0;
 	virtual void deleteEventListener(IEventListener* pEventListener) = 0;
 
 	// Methoden für Events
@@ -37,14 +37,14 @@ public:
 	@brief		Entfernt das erste Event von dem angegebenen Typen aus der EventQueue
 				oder alle wenn abortAll = true
 
-	@param[in] EVENT_TYPE eventType		Typ des Events welches entfernt werden soll
+	@param[in] CEventType eventType		Typ des Events welches entfernt werden soll
 	@param[in] BOOLEAN abortAll			gibt an ob nur das erste oder alle Events 
 										des Typen aus der Queue entfernt werden soll
 
 	@return		-c true		Event(s) erfolgreich gelöscht
 				-c false	Fehler beim löschen (keins mehr vorhanden?)
 	**************************************************************************/
-	virtual BOOLEAN abortEvent(EVENT_TYPE eventType, BOOLEAN abortAll = false) = 0;
+	virtual BOOLEAN abortEvent(CEventType eventType, BOOLEAN abortAll = false) = 0;
 
 	/**************************************************************************
 	@brief		Führt alle Events in der Event-Queue aus, bis das Zeitlimit 
@@ -62,12 +62,12 @@ public:
 	@brief		Prüft ob der Angegebene EventType von irgendeinem Listener 
 				überhaupt empfangen und damit auch verarbeitet wird
 
-	@param[in] EVENT_TYPE eventType		EventType der geprüft werden soll
+	@param[in] CEventType eventType		EventType der geprüft werden soll
 
 	@return		-c true		Event wird verarbeitet
 				-c false	Event kann nicht verbeitet werden
 	**************************************************************************/
-	virtual BOOLEAN validateType(EVENT_TYPE eventType) = 0;
+	virtual BOOLEAN validateType(CEventType eventType) = 0;
 };
 
 #endif

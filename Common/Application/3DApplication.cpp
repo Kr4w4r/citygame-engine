@@ -1,7 +1,9 @@
 #include "3DApplication.h"
+#include "EventManager.h"
+#include "TickEvent.h"
 
 #include <stdio.h>
-//#include "IEvent.h"
+#include "EventManager.h"
 
 C3DApplication::C3DApplication(HDC& hDC, HWND &hWnd) :
 mhDC(hDC),
@@ -23,6 +25,8 @@ BOOLEAN C3DApplication::enter()
 	ULONG now = GetTickCount();
 	mTimeDiff = now - mLastTime;
 	mLastTime = now;
+
+	CEventManager::getInstance()->queueEvent(new CTickEvent(mTimeDiff));
 
 	if (mInitialized == FALSE)
 	{

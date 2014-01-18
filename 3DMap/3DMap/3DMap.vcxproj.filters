@@ -21,6 +21,18 @@
     <Filter Include="zlib">
       <UniqueIdentifier>{d65e82f6-8c24-4967-a030-105a7eacb4f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="IO">
+      <UniqueIdentifier>{ac349f02-2374-4229-8985-c410a634626a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EventSystem">
+      <UniqueIdentifier>{f7de9087-976e-4490-b29d-b2fcc42fa09e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{2f07fe71-7f24-4a8f-98aa-4b38afa7d567}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{c83a009a-89b0-4b23-aed5-1ba836b19847}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -68,6 +80,45 @@
     <ClInclude Include="3DMapFormat.h">
       <Filter>3DMap</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Common\IO\IOHandlerThread.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Events\Event.h">
+      <Filter>EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Events\EventListener.h">
+      <Filter>EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Events\EventManager.h">
+      <Filter>EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Events\IEvent.h">
+      <Filter>EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Events\IEventListener.h">
+      <Filter>EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Events\IEventManager.h">
+      <Filter>EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Thread.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\IO\KeyboardEvent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\CriticalSection.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Application\TickEvent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\IO\KeyboardBindings.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="MapApplicationKeyBindings.h">
+      <Filter>Application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MapApplication.cpp">
@@ -96,6 +147,33 @@
     </ClCompile>
     <ClCompile Include="3DMapSaver.cpp">
       <Filter>3DMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\IO\IOHandlerThread.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Events\Event.cpp">
+      <Filter>EventSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Events\EventListener.cpp">
+      <Filter>EventSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Events\EventManager.cpp">
+      <Filter>EventSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Thread.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\IO\KeyboardEvent.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Application\TickEvent.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\IO\KeyboardBindings.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="MapApplicationKeyBindings.cpp">
+      <Filter>Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
