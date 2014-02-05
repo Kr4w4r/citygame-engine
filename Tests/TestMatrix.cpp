@@ -41,23 +41,23 @@ namespace Tests
 
 		#define CHECK_MATRIX_VALUES(matrix, _m11, _m12, _m13, _m14, _m21, _m22, _m23, _m24,_m31, _m32, _m33, _m34, _m41, _m42, _m43, _m44) \
 		{ \
-			Assert::AreEqual(matrix.m11, (float)_m11); \
-			Assert::AreEqual(matrix.m12, (float)_m12); \
-			Assert::AreEqual(matrix.m13, (float)_m13); \
-			Assert::AreEqual(matrix.m14, (float)_m14); \
-			Assert::AreEqual(matrix.m21, (float)_m21); \
-			Assert::AreEqual(matrix.m22, (float)_m22); \
-			Assert::AreEqual(matrix.m23, (float)_m23); \
-			Assert::AreEqual(matrix.m24, (float)_m24); \
-			Assert::AreEqual(matrix.m31, (float)_m31); \
-			Assert::AreEqual(matrix.m32, (float)_m32); \
-			Assert::AreEqual(matrix.m33, (float)_m33); \
-			Assert::AreEqual(matrix.m34, (float)_m34); \
-			Assert::AreEqual(matrix.m41, (float)_m41); \
-			Assert::AreEqual(matrix.m42, (float)_m42); \
-			Assert::AreEqual(matrix.m43, (float)_m43); \
-			Assert::AreEqual(matrix.m44, (float)_m44); \
-		  }
+			Assert::AreEqual((float)_m11, matrix.m11); \
+			Assert::AreEqual((float)_m12, matrix.m12); \
+			Assert::AreEqual((float)_m13, matrix.m13); \
+			Assert::AreEqual((float)_m14, matrix.m14); \
+			Assert::AreEqual((float)_m21,matrix.m21); \
+			Assert::AreEqual((float)_m22, matrix.m22); \
+			Assert::AreEqual((float)_m23, matrix.m23); \
+			Assert::AreEqual((float)_m24, matrix.m24); \
+			Assert::AreEqual((float)_m31, matrix.m31); \
+			Assert::AreEqual((float)_m32, matrix.m32); \
+			Assert::AreEqual((float)_m33, matrix.m33); \
+			Assert::AreEqual((float)_m34, matrix.m34); \
+			Assert::AreEqual((float)_m41, matrix.m41); \
+			Assert::AreEqual((float)_m42, matrix.m42); \
+			Assert::AreEqual((float)_m43, matrix.m43); \
+			Assert::AreEqual((float)_m44, matrix.m44); \
+		}
 		/*
 		void checkMatrixValues(CMatrix& matrix, float _m11, float _m12, float _m13, float _m14, 
 			float _m21, float _m22, float _m23, float _m24,
@@ -216,6 +216,122 @@ namespace Tests
 				162,188,214,240,
 				50,60,70,80);
 		};
+
+		[TestMethod]
+		void matrixAddSkalar()
+		{
+			CMatrix m1(
+				1,2,3,4,
+				5,6,7,8,
+				9,10,11,12,
+				13,14,15,16);
+
+			CMatrix result = m1 + 2;
+
+			CHECK_MATRIX_VALUES(result, 
+				3,4,5,6,
+				7,8,9,10,
+				11,12,13,14,
+				15,16,17,18);
+
+			// Testdaten entfernen
+			result.loadIdentity();
+
+			result = 2 + m1;
+
+			CHECK_MATRIX_VALUES(result, 
+				3,4,5,6,
+				7,8,9,10,
+				11,12,13,14,
+				15,16,17,18);
+		}
+
+		[TestMethod]
+		void matrixSubstractSkalar()
+		{
+			CMatrix m1(
+				1,2,3,4,
+				5,6,7,8,
+				9,10,11,12,
+				13,14,15,16);
+
+			CMatrix result = m1 - 2;
+
+			CHECK_MATRIX_VALUES(result, 
+				-1,0,1,2,
+				3,4,5,6,
+				7,8,9,10,
+				11,12,13,14);
+
+			// Testdaten entfernen
+			result.loadIdentity();
+
+			result = 2 - m1;
+
+			CHECK_MATRIX_VALUES(result, 
+				-1,0,1,2,
+				3,4,5,6,
+				7,8,9,10,
+				11,12,13,14);
+		}
+
+		[TestMethod]
+		void matrixMultiplySkalar()
+		{
+			CMatrix m1(
+				1,2,3,4,
+				5,6,7,8,
+				9,10,11,12,
+				13,14,15,16);
+
+			CMatrix result = m1 * 2;
+
+			CHECK_MATRIX_VALUES(result, 
+				2,4,6,8,
+				10,12,14,16,
+				18,20,22,24,
+				26,28,30,32);
+
+			// Testdaten entfernen
+			result.loadIdentity();
+
+			result = 2 * m1;
+
+			CHECK_MATRIX_VALUES(result, 
+				2,4,6,8,
+				10,12,14,16,
+				18,20,22,24,
+				26,28,30,32);
+		}
+
+		[TestMethod]
+		void matrixDevideSkalar()
+		{
+			CMatrix m1(
+				1,2,3,4,
+				5,6,7,8,
+				9,10,11,12,
+				13,14,15,16);
+
+			CMatrix result = m1 / 2;
+
+			CHECK_MATRIX_VALUES(result, 
+				2,4,6,8,
+				10,12,14,16,
+				18,20,22,24,
+				26,28,30,32);
+
+			// Testdaten entfernen
+			result.loadIdentity();
+
+			result = 2 / m1;
+
+			CHECK_MATRIX_VALUES(result, 
+				2,4,6,8,
+				10,12,14,16,
+				18,20,22,24,
+				26,28,30,32);
+		}
 
 	};
 }
