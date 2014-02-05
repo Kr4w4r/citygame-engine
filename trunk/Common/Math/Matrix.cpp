@@ -101,3 +101,60 @@ CMatrix CMatrix::operator * (CMatrix& matrix)
 		m41 * matrix.m13 + m42 * matrix.m23 + m43 * matrix.m33 + m44 * matrix.m43,
 		m41 * matrix.m14 + m42 * matrix.m24 + m43 * matrix.m34 + m44 * matrix.m44);
 }
+
+CMatrix operator + (CMatrix& matrix, float skalar)
+{
+	return CMatrix(matrix.m11 + skalar, matrix.m12 + skalar, matrix.m13 + skalar, matrix.m14 + skalar,
+		matrix.m21 + skalar, matrix.m22 + skalar, matrix.m23 + skalar, matrix.m24 + skalar,
+		matrix.m31 + skalar, matrix.m32 + skalar, matrix.m33 + skalar, matrix.m34 + skalar,
+		matrix.m41 + skalar, matrix.m42 + skalar, matrix.m43 + skalar, matrix.m44 + skalar);
+}
+
+CMatrix operator + (float skalar, CMatrix& matrix)
+{
+	return matrix + skalar;
+}
+//CMatrix operator + (CMatrix& matrix, unsigned long skalar);
+//CMatrix operator + (unsigned long skalar, CMatrix& matrix);
+
+CMatrix operator - (CMatrix& matrix, float skalar)
+{
+	return CMatrix(matrix.m11 - skalar, matrix.m12 - skalar, matrix.m13 - skalar, matrix.m14 - skalar,
+		matrix.m21 - skalar, matrix.m22 - skalar, matrix.m23 - skalar, matrix.m24 - skalar,
+		matrix.m31 - skalar, matrix.m32 - skalar, matrix.m33 - skalar, matrix.m34 - skalar,
+		matrix.m41 - skalar, matrix.m42 - skalar, matrix.m43 - skalar, matrix.m44 - skalar);
+}
+CMatrix operator - (float skalar, CMatrix& matrix)
+{
+	return matrix - skalar;
+}
+//CMatrix operator - (CMatrix& matrix, unsigned long skalar);
+//CMatrix operator - (unsigned long skalar, CMatrix& matrix);
+
+CMatrix operator * (CMatrix& matrix, float skalar)
+{
+	return CMatrix(matrix.m11 * skalar, matrix.m12 * skalar, matrix.m13 * skalar, matrix.m14 * skalar,
+		matrix.m21 * skalar, matrix.m22 * skalar, matrix.m23 * skalar, matrix.m24 * skalar,
+		matrix.m31 * skalar, matrix.m32 * skalar, matrix.m33 * skalar, matrix.m34 * skalar,
+		matrix.m41 * skalar, matrix.m42 * skalar, matrix.m43 * skalar, matrix.m44 * skalar);
+}
+CMatrix operator * (float skalar, CMatrix& matrix)
+{
+	return matrix * skalar;
+}
+//CMatrix operator * (CMatrix& matrix, unsigned long skalar);
+//CMatrix operator * (unsigned long skalar, CMatrix& matrix);
+
+CMatrix operator / (CMatrix& matrix, float skalar)
+{
+	return CMatrix(matrix.m11 / skalar, matrix.m12 / skalar, matrix.m13 / skalar, matrix.m14 / skalar,
+		matrix.m21 / skalar, matrix.m22 / skalar, matrix.m23 / skalar, matrix.m24 / skalar,
+		matrix.m31 / skalar, matrix.m32 / skalar, matrix.m33 / skalar, matrix.m34 / skalar,
+		matrix.m41 / skalar, matrix.m42 / skalar, matrix.m43 / skalar, matrix.m44 / skalar);
+}
+CMatrix operator / (float skalar, CMatrix& matrix)
+{
+	return matrix / skalar;
+}
+//CMatrix operator / (CMatrix& matrix, unsigned long skalar);
+//CMatrix operator / (unsigned long skalar, CMatrix& matrix);

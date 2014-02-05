@@ -47,3 +47,23 @@ public:
 	float m43;
 	float m44;
 };
+
+CMatrix operator + (CMatrix& matrix, float skalar);
+CMatrix operator + (float skalar, CMatrix& matrix);
+//CMatrix operator + (CMatrix& matrix, unsigned long skalar);
+//CMatrix operator + (unsigned long skalar, CMatrix& matrix);
+
+CMatrix operator - (CMatrix& matrix, float skalar);
+CMatrix operator - (float skalar, CMatrix& matrix);
+//CMatrix operator - (CMatrix& matrix, unsigned long skalar);
+//CMatrix operator - (unsigned long skalar, CMatrix& matrix);
+
+CMatrix operator * (CMatrix& matrix, float skalar);
+CMatrix operator * (float skalar, CMatrix& matrix);
+//CMatrix operator * (CMatrix& matrix, unsigned long skalar);
+//CMatrix operator * (unsigned long skalar, CMatrix& matrix);
+
+CMatrix operator / (CMatrix& matrix, float skalar);
+CMatrix operator / (float skalar, CMatrix& matrix);
+//CMatrix operator / (CMatrix& matrix, unsigned long skalar);
+//CMatrix operator / (unsigned long skalar, CMatrix& matrix);
