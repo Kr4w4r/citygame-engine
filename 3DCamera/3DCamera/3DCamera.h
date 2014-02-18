@@ -22,7 +22,15 @@ public:
 	void rotateY(float angle) { mRotation.y += angle; };
 	void rotateZ(float angle) { mRotation.z += angle; };
 
+	void lookAt(CVector3f position);
+
+	void render();
+
 protected:
 	CVector3f mPosition;
 	CVector3f mRotation;
+
+	CVector3f mLook;
+	CVector3f mUp;
+	CVector3f mRight;
 };
