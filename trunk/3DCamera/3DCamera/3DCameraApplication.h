@@ -15,6 +15,8 @@ protected:
 	virtual GLvoid drawScene();
 
 protected:
+	C3DCamera* mpViewCamera;
 	C3DCamera* mpCamera;
+	CVector3f mLookAt;
 };
 
