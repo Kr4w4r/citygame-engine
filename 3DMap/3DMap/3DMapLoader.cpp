@@ -9,7 +9,7 @@ C3DMapLoader::C3DMapLoader()
 {
 }
 
-BOOLEAN C3DMapLoader::loadMap(char* filename, C3DMap*& pMap)
+BOOLEAN C3DMapLoader::loadMap(char* filename, C3DMapData*& pMap)
 {
 	ifstream fMapFile("test.mff", ios_base::binary);
 
@@ -78,7 +78,7 @@ BOOLEAN C3DMapLoader::loadMap(char* filename, C3DMap*& pMap)
 
 	fMapFile.close();
 
-	pMap = new C3DMap(fileHeader.pointCountX -1, fileHeader.pointCountY -1, mapData);
+	pMap = new C3DMapData(fileHeader.pointCountX -1, fileHeader.pointCountY -1, mapData);
 
 	return TRUE;
 }

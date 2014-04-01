@@ -1,6 +1,6 @@
-#include "3DMap.h"
+#include "3DMapData.h"
 
-C3DMap::C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat maxHeight)
+C3DMapData::C3DMapData(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat maxHeight)
 {
 	mWidth = horizontalCellCount;
 	mHeight = verticalCellCount;
@@ -9,7 +9,7 @@ C3DMap::C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat max
 	generateFlatMap(mWidth, mHeight, 1.0f, 1.0f);
 }
 
-C3DMap::C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat width, GLfloat height, GLfloat maxHeight)
+C3DMapData::C3DMapData(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat width, GLfloat height, GLfloat maxHeight)
 {
 	mWidth = horizontalCellCount; 
 	mHeight = verticalCellCount;
@@ -18,7 +18,7 @@ C3DMap::C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat wid
 	generateFlatMap(mWidth, mHeight, width, height);
 }
 
-C3DMap::C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, MAP_DATA mapData)
+C3DMapData::C3DMapData(GLuint horizontalCellCount, GLuint verticalCellCount, MAP_DATA mapData)
 {
 	mWidth = horizontalCellCount;
 	mHeight = verticalCellCount;
@@ -38,7 +38,7 @@ C3DMap::C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, MAP_DATA ma
 
 }
 
-C3DMap::~C3DMap()
+C3DMapData::~C3DMapData()
 {
 	// Speicher für die Map wieder freigeben
 	for (GLint x = 0; x <= mWidth; x++)
@@ -55,7 +55,7 @@ C3DMap::~C3DMap()
 	mMapData = NULL;
 }
 
-void C3DMap::generateFlatMap(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat width, GLfloat height)
+void C3DMapData::generateFlatMap(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat width, GLfloat height)
 {
 	mWidth = horizontalCellCount;
 	mHeight = verticalCellCount;
@@ -87,7 +87,7 @@ void C3DMap::generateFlatMap(GLuint horizontalCellCount, GLuint verticalCellCoun
 	}
 }
 
-void C3DMap::render()
+void C3DMapData::render()
 {
 	glPushMatrix();
 	
@@ -114,7 +114,7 @@ void C3DMap::render()
 	glPopMatrix();
 }
 
-CVector3f C3DMap::getColor(GLfloat height)
+CVector3f C3DMapData::getColor(GLfloat height)
 {
 	CVector3f color;
 	/*
@@ -146,7 +146,7 @@ CVector3f C3DMap::getColor(GLfloat height)
 	return color;
 }
 
-MAP_CORNER* C3DMap::getMapCorner(GLuint x, GLuint y)
+MAP_CORNER* C3DMapData::getMapCorner(GLuint x, GLuint y)
 {
 	if ((x >= 0) && (x <= mWidth) && (y >= 0) && (y <= mHeight))
 	{
@@ -155,12 +155,12 @@ MAP_CORNER* C3DMap::getMapCorner(GLuint x, GLuint y)
 	return NULL;
 }
 
-GLuint C3DMap::getWidth()
+GLuint C3DMapData::getWidth()
 {
 	return mWidth;
 }
 
-GLuint C3DMap::getHeight()
+GLuint C3DMapData::getHeight()
 {
 	return mHeight;
 }

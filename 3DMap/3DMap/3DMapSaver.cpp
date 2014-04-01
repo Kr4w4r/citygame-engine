@@ -10,7 +10,7 @@ using std::ofstream;
 C3DMapSaver::C3DMapSaver()
 {}
 
-BOOLEAN C3DMapSaver::saveMap(C3DMap* map, char* filename)
+BOOLEAN C3DMapSaver::saveMap(C3DMapData* map, char* filename)
 {
 	GLuint mapWidth = map->getWidth();
 	GLuint mapHeight = map->getHeight();
@@ -32,9 +32,9 @@ BOOLEAN C3DMapSaver::saveMap(C3DMap* map, char* filename)
 
 	MAP_CORNER* pCorner = (MAP_CORNER*)((CHAR*)pMapFileHeader + sizeof(T_MAP_3D_FILEHEADER));
 
-	for (int y = 0; y < pMapFileHeader->pointCountY; y++)
+	for (ULONG y = 0; y < pMapFileHeader->pointCountY; y++)
 	{
-		for (int x = 0; x < pMapFileHeader->pointCountX; x++)
+		for (ULONG x = 0; x < pMapFileHeader->pointCountX; x++)
 		{
 			MAP_CORNER* pMapCorner = map->getMapCorner(x, y);
 			if (pMapCorner == NULL)
@@ -55,7 +55,7 @@ BOOLEAN C3DMapSaver::saveMap(C3DMap* map, char* filename)
 	//zlib states that the source buffer must be at least 0.1
 	//times larger than the source buffer plus 12 bytes
 	//to cope with the overhead of zlib data streams
-	ULONG compressedFileBufferSize = fileSize + (fileSize * 0.1) + 12;
+	ULONG compressedFileBufferSize = fileSize + (ULONG)(fileSize * 0.1) + 12;
 	UCHAR* pCompressionBuffer = new UCHAR[compressedFileBufferSize];
 
 	//compress((Bytef*)pCompressionBuffer, &compressedFileBufferSize, (Bytef*)pMapData, fileSize);
@@ -101,7 +101,7 @@ BOOLEAN C3DMapSaver::saveMap(C3DMap* map, char* filename)
 	fMapFile.close();
 
 	CHAR out[1024];
-	sprintf(out, "Daten: %u Byte geschrieben: %u\n", fileSize, compressedFileBufferSize);
+	sprintf_s(out, 1024, "Daten: %u Byte geschrieben: %u\n", fileSize, compressedFileBufferSize);
 	OutputDebugString(out);
 
 	delete [] pCompressionBuffer;

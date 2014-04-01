@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,15 +19,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -40,7 +40,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir)\..\Common\IO;$(SolutionDir)\..\Common\zlib;$(SolutionDir)\..\Common;$(SolutionDir)\..\Common\Math;$(SolutionDir)\..\Common\Loader;$(SolutionDir)\..\Common\Events;$(SolutionDir)\..\Common\Application;$(IncludePath)</IncludePath>
     <SourcePath>$(SolutionDir)\..\Common\zlib;$(SolutionDir)\..\Common\Math;$(SolutionDir)\..\Common\Loader;$(SolutionDir)\..\Common\Events;$(SolutionDir)\..\Common\Application;$(SolutionDir)\..\Common;$(SourcePath)</SourcePath>
   </PropertyGroup>
@@ -57,12 +57,16 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -97,18 +101,22 @@
     <ClInclude Include="..\..\Common\Events\IEvent.h" />
     <ClInclude Include="..\..\Common\Events\IEventListener.h" />
     <ClInclude Include="..\..\Common\Events\IEventManager.h" />
+    <ClInclude Include="..\..\Common\IO\IKeyboardBindings.h" />
     <ClInclude Include="..\..\Common\IO\IOHandlerThread.h" />
     <ClInclude Include="..\..\Common\IO\KeyboardEvent.h" />
     <ClInclude Include="..\..\Common\IO\KeyboardBindings.h" />
     <ClInclude Include="..\..\Common\Math\vector3f.h" />
     <ClInclude Include="..\..\Common\Thread.h" />
-    <ClInclude Include="3DMap.h" />
+    <ClInclude Include="3DMapData.h" />
     <ClInclude Include="3DMapFormat.h" />
+    <ClInclude Include="3DMapLevelOfDetailRenderer.h" />
     <ClInclude Include="3DMapLoader.h" />
     <ClInclude Include="3DMapSaver.h" />
+    <ClInclude Include="IMap.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="MapApplication.h" />
     <ClInclude Include="MapApplicationKeyBindings.h" />
+    <ClInclude Include="MapSegment.h" />
     <ClInclude Include="RandomFractal3DMapGenerator.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -125,12 +133,14 @@
     <ClCompile Include="..\..\Common\IO\KeyboardBindings.cpp" />
     <ClCompile Include="..\..\Common\Math\vector3f.cpp" />
     <ClCompile Include="..\..\Common\Thread.cpp" />
-    <ClCompile Include="3DMap.cpp" />
+    <ClCompile Include="3DMapData.cpp" />
+    <ClCompile Include="3DMapLevelOfDetailRenderer.cpp" />
     <ClCompile Include="3DMapLoader.cpp" />
     <ClCompile Include="3DMapSaver.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapApplication.cpp" />
     <ClCompile Include="MapApplicationKeyBindings.cpp" />
+    <ClCompile Include="MapSegment.cpp" />
     <ClCompile Include="RandomFractal3DMapGenerator.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -9,7 +9,7 @@ class C3DMapSaver
 public:
 	C3DMapSaver();
 
-	BOOLEAN saveMap(C3DMap* map, char* filename);
+	BOOLEAN saveMap(C3DMapData* map, char* filename);
 
 protected:
 	
