@@ -8,12 +8,12 @@ CRandomFractal3DMapGenerator::CRandomFractal3DMapGenerator()
 CRandomFractal3DMapGenerator::~CRandomFractal3DMapGenerator()
 {}
 
-C3DMap* CRandomFractal3DMapGenerator::generateMap(GLint mTotalGridSize, GLfloat maxHeight)
+C3DMapData* CRandomFractal3DMapGenerator::generateMap(GLint mTotalGridSize, GLfloat maxHeight)
 {
 	return generateMap(mTotalGridSize, 1.0f, 1.0f, maxHeight);
 }
 
-C3DMap* CRandomFractal3DMapGenerator::generateMap(GLint squareGridSize, GLfloat width, GLfloat height, GLfloat maxHeight)
+C3DMapData* CRandomFractal3DMapGenerator::generateMap(GLint squareGridSize, GLfloat width, GLfloat height, GLfloat maxHeight)
 {
 	mIteration = 0;
 	mMaxHeight = maxHeight;
@@ -78,7 +78,7 @@ C3DMap* CRandomFractal3DMapGenerator::generateMap(GLint squareGridSize, GLfloat 
 		}
 	}
 
-	return new C3DMap(squareGridSize, squareGridSize, mTempMap);
+	return new C3DMapData(squareGridSize, squareGridSize, mTempMap);
 }
 
 GLfloat CRandomFractal3DMapGenerator::getRandomHeight()

@@ -4,13 +4,18 @@
 #include "3DApplication.h"
 #include "RandomFractal3DMapGenerator.h"
 #include "IOHandlerThread.h"
+#include "MapApplicationKeyBindings.h"
+#include "3DMapLevelOfDetailRenderer.h"
 
 const GLfloat ROT_SPEED = 20.0f;
 const GLfloat ZOOM_SPEED = 5.0f;
 
+const GLfloat MOVE_SPEED = 1.0f;
+
 const GLfloat MAP_HEIGHT = 3.0f;
 
-const GLuint MAP_SIZE = 128;
+const GLuint MAP_SIZE = 512 * 2;
+const UCHAR LOD_DEPTH = 4;
 
 class CMapApplication : public C3DApplication
 {
@@ -21,16 +26,20 @@ public:
 protected:
 	CVector3f mRotation;
 	GLfloat distance;
+	CVector3f mFakeCamPos;
 
 	bool mRefresh;
 
-	C3DMap* mMap;
+	C3DMapData* mMap;
 
 	virtual GLvoid drawScene();
 	virtual GLvoid updateScene();
 	virtual GLvoid initScene();
 
 	CIOHandlerThread mIOHandlerThread;
+	CMapApplicationKeyBindings mKeyBindings;
+
+	C3DMapLevelOfDetailRenderer* mpRenderer;
 };
 
 #endif

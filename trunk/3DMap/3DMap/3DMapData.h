@@ -2,28 +2,23 @@
 #define _3DMAP_H
 
 #define WIN32_LEAN_AND_MEAN
-#include "windows.h"
 
-#include "GL/gl.h"
-#include "GL/glu.h"
+#include "IMap.h"
 
-#include "Vector3f.h"
-
-typedef CVector3f MAP_CORNER;
-typedef MAP_CORNER*** MAP_DATA;
-
-class C3DMap
+class C3DMapData : public IMap
 {
 public:
-	C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat maxHeight);
-	C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat width, GLfloat height, GLfloat maxHeight);
-	C3DMap(GLuint horizontalCellCount, GLuint verticalCellCount, MAP_DATA mapData);
-	~C3DMap();
+	C3DMapData(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat maxHeight);
+	C3DMapData(GLuint horizontalCellCount, GLuint verticalCellCount, GLfloat width, GLfloat height, GLfloat maxHeight);
+	C3DMapData(GLuint horizontalCellCount, GLuint verticalCellCount, MAP_DATA mapData);
+	~C3DMapData();
 
 	void render();
 
 	GLuint getWidth();
 	GLuint getHeight();
+
+	GLfloat getMaxHeight() { return mMaxHeight; };
 
 	MAP_CORNER* getMapCorner(GLuint x, GLuint y);
 

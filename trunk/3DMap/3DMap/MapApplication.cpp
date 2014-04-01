@@ -3,9 +3,12 @@
 #include "3DMapSaver.h"
 #include "3DMapLoader.h"
 
+
 CMapApplication::CMapApplication(HDC &hDC, HWND &hWnd)
 :C3DApplication(hDC, hWnd)
+,mIOHandlerThread(&mKeyBindings)
 {
+	mpRenderer = NULL;
 	distance = -20;
 	mRefresh = false;
 }
@@ -51,7 +54,13 @@ GLvoid CMapApplication::drawScene()
 		glVertex3f(8,8, -MAP_HEIGHT);
 	glEnd();
 
-	mMap->render();
+	//mMap->render();
+	mpRenderer->render(mFakeCamPos);
+
+	glBegin(GL_POINTS);
+		glColor3f(1.0f, 0, 0);
+		glVertex3f(mFakeCamPos.x, mFakeCamPos.y, mFakeCamPos.z);
+	glEnd();
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	
@@ -86,6 +95,23 @@ GLvoid CMapApplication::drawScene()
 
 GLvoid CMapApplication::updateScene()
 {
+	if (g_Keystate['G'] == TRUE)
+	{
+		mFakeCamPos.x -= MOVE_SPEED * (GLfloat)mTimeDiff / 1000;
+	}
+	if (g_Keystate['J'] == TRUE)
+	{
+		mFakeCamPos.x += MOVE_SPEED * (GLfloat)mTimeDiff / 1000;
+	}
+	if (g_Keystate['Z'] == TRUE)
+	{
+		mFakeCamPos.y += MOVE_SPEED * (GLfloat)mTimeDiff / 1000;
+	}
+	if (g_Keystate['H'] == TRUE)
+	{
+		mFakeCamPos.y -= MOVE_SPEED * (GLfloat)mTimeDiff / 1000;
+	}
+
 	if (g_Keystate['Q'] == TRUE)
 	{
 		mRotation.y += ROT_SPEED * (GLfloat)mTimeDiff /1000;
@@ -129,6 +155,9 @@ GLvoid CMapApplication::updateScene()
 		delete mMap;
 		CRandomFractal3DMapGenerator gen;
 		mMap = gen.generateMap(MAP_SIZE, 16, 16, MAP_HEIGHT);
+
+		delete mpRenderer;
+		mpRenderer = new C3DMapLevelOfDetailRenderer(mMap, LOD_DEPTH);
 	}
 
 	if ((g_Keystate['K'] == TRUE) && (mRefresh == false))
@@ -151,7 +180,7 @@ GLvoid CMapApplication::updateScene()
 		Sleep(1000);
 
 		C3DMapLoader loader;
-		C3DMap* newMap = NULL;
+		C3DMapData* newMap = NULL;
 		if (loader.loadMap("test.mff", newMap) == TRUE)
 		{
 			delete mMap;
@@ -174,6 +203,9 @@ GLvoid CMapApplication::initScene()
 	CRandomFractal3DMapGenerator generator;
 
 	mMap = generator.generateMap(MAP_SIZE, 16, 16, MAP_HEIGHT);
+	//mMap = new C3DMapData(MAP_SIZE, MAP_SIZE, 16, 16, MAP_HEIGHT);
+
+	mpRenderer = new C3DMapLevelOfDetailRenderer(mMap, LOD_DEPTH);
 	
 	C3DMapSaver saver;
 	C3DMapLoader loader;

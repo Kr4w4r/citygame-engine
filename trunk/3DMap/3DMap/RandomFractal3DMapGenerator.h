@@ -1,7 +1,7 @@
 #ifndef RANDOM_FRACTAL_3DMAP_GENERATOR_H
 #define RANDOM_FRACTAL_3DMAP_GENERATOR_H
 
-#include "3DMap.h"
+#include "3DMapData.h"
 
 class CRandomFractal3DMapGenerator
 {
@@ -9,8 +9,8 @@ public:
 	CRandomFractal3DMapGenerator();
 	~CRandomFractal3DMapGenerator();
 
-	C3DMap* generateMap(GLint squareGridSize, GLfloat maxHeight);
-	C3DMap* generateMap(GLint squareGridSize, GLfloat width, GLfloat height, GLfloat maxHeight);
+	C3DMapData* generateMap(GLint squareGridSize, GLfloat maxHeight);
+	C3DMapData* generateMap(GLint squareGridSize, GLfloat width, GLfloat height, GLfloat maxHeight);
 
 protected:
 	GLfloat getRandomHeight();

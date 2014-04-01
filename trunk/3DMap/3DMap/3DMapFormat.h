@@ -1,7 +1,7 @@
 #ifndef _3D_MAP_FORMAT
 #define _3D_MAP_FORMAT
 
-#include "3DMap.h"
+#include "3DMapData.h"
 
 const CHAR DEFAULT_IDENT[4] = {'_', 'm', 'f', 'f'};
 const ULONG MAP_3D_VERSION = 0x01000000;

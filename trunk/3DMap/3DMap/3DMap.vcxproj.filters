@@ -59,9 +59,6 @@
     <ClInclude Include="main.h">
       <Filter>Application</Filter>
     </ClInclude>
-    <ClInclude Include="3DMap.h">
-      <Filter>3DMap</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Common\Application\3DApplication.h">
       <Filter>Application</Filter>
     </ClInclude>
@@ -119,6 +116,21 @@
     <ClInclude Include="MapApplicationKeyBindings.h">
       <Filter>Application</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Common\IO\IKeyboardBindings.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="3DMapData.h">
+      <Filter>3DMap</Filter>
+    </ClInclude>
+    <ClInclude Include="3DMapLevelOfDetailRenderer.h">
+      <Filter>3DMap</Filter>
+    </ClInclude>
+    <ClInclude Include="IMap.h">
+      <Filter>3DMap</Filter>
+    </ClInclude>
+    <ClInclude Include="MapSegment.h">
+      <Filter>3DMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MapApplication.cpp">
@@ -129,9 +141,6 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Application</Filter>
-    </ClCompile>
-    <ClCompile Include="3DMap.cpp">
-      <Filter>3DMap</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Common\Application\3DApplication.cpp">
       <Filter>Application</Filter>
@@ -174,6 +183,15 @@
     </ClCompile>
     <ClCompile Include="MapApplicationKeyBindings.cpp">
       <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="3DMapData.cpp">
+      <Filter>3DMap</Filter>
+    </ClCompile>
+    <ClCompile Include="MapSegment.cpp">
+      <Filter>3DMap</Filter>
+    </ClCompile>
+    <ClCompile Include="3DMapLevelOfDetailRenderer.cpp">
+      <Filter>3DMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@ public:
 	C3DMapLoader();
 
 	BOOLEAN test();
-	BOOLEAN loadMap(char* filename, C3DMap*& map);
+	BOOLEAN loadMap(char* filename, C3DMapData*& map);
 };
 
 #endif
